@@ -38,9 +38,9 @@ var express     = require('express'),
 
 // Configuration
 try {
-    var config = require('./config.json');
+    var config = require('./config/config.json');
 } catch(e) {
-    console.error("File config.json not found or is invalid.  Try: `cp config.json.sample config.json`");
+    console.error("File config.json not found or is invalid.  Try: `cp -fr config.sample/ config/`");
     process.exit(1);
 }
 
@@ -70,7 +70,7 @@ db.on("error", function(err) {
 //
 
 try {
-    var apisConfig = require('./public/data/apiconfig.json');
+    var apisConfig = require('./config/apiconfig.json');
     if (config.debug) {
         console.log(util.inspect(apisConfig));
     }
@@ -650,7 +650,7 @@ function checkPathForAPI(req, res, next) {
         // If api wasn't passed in as a parameter, check the path to see if it's there
         var pathName = req.url.replace('/','');
         // Is it a valid API - if there's a config file we can assume so
-        fs.stat(__dirname + '/public/data/' + pathName + '.json', function (error, stats) {
+        fs.stat(__dirname + '/config/apisites/' + pathName + '.json', function (error, stats) {
             if (stats) {
                 req.params.api = pathName;
             }
@@ -668,7 +668,7 @@ function dynamicHelpers(req, res, next) {
     if (req.params.api) {
         res.locals.apiInfo = apisConfig[req.params.api];
         res.locals.apiName = req.params.api;
-        res.locals.apiDefinition = require(__dirname + '/public/data/' + req.params.api + '.json');
+        res.locals.apiDefinition = require(__dirname + '/config/apisites/' + req.params.api + '.json');
         // If the cookie says we're authed for this particular API, set the session to authed as well
         if (req.session[req.params.api] && req.session[req.params.api]['authed']) {
             req.session['authed'] = true;
