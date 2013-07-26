@@ -56,7 +56,11 @@ RUNNING I/O DOCS
 **Create your config** file by copying the default config:
 
 ```
-cp config.json.sample config.json
+cp -fr config.sample/ config/
+```
+or better linking it:
+```
+ln -sf config.sample/ config
 ```
 The defaults will work, but feel free to change them.
 
@@ -82,7 +86,7 @@ QUICK API CONFIGURATION EXAMPLE
 -------------------------------
 Adding an API to the I/O Docs configuration is relatively simple.
 
-First, append the new top-level service information to the `./public/data/apiconfig.json` file.
+First, append the new top-level service information to the `./config/apiconfig.json` file.
 
 Example:
    
@@ -101,7 +105,7 @@ Example:
 }
 ```
 
-Add the file `./public/data/lowercaseapi.json` to define the API.
+Add the file `./config/apisites/lowercaseapi.json` to define the API.
 
 Example:
    
@@ -381,7 +385,7 @@ Line:
 API-LEVEL CONFIG DETAILS
 ========================
 For every API that is configured in *apiconfig.json* a JSON config file must exist.
-You should look at the *./public/data/* directory for examples.  
+You should look at the *./config/* directory for examples.
 
 ### Example #1 - Explanation of each field in an example API-level configuration
 
