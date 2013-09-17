@@ -91,6 +91,7 @@ if (process.env.REDISTOGO_URL) {
 app.configure(function() {
     app.set('views', __dirname + '/views');
     app.set('view engine', 'jade');
+    app.use(express.static(__dirname + '/public'));
     app.use(express.logger());
     app.use(express.bodyParser());
     app.use(express.methodOverride());
@@ -116,7 +117,6 @@ app.configure(function() {
     app.use(checkPathForAPI);
     app.use(dynamicHelpers);
     app.use(app.router);
-    app.use(express.static(__dirname + '/public'));
 });
 
 app.configure('development', function() {
